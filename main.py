@@ -73,18 +73,14 @@ def write_report_to_csv(all_dep: list):
 
 
 def print_report(all_dep: list):
+    """Print aggregated report information"""
     for i in all_dep:
         print('Department:', i[0], ';Workers count:', i[1], ';Min payment:', i[2],
               '; Max payment:', i[3], ';Middle payment:', i[5])
 
 
-if __name__ == '__main__':
-    print('Введите имя файла или не вводите, если назвали report.csv')
-    file_name = input("Enter filename : ") or "report.csv"
-    with open(file_name, encoding='UTF-8-sig') as f:
-        reader = csv.reader(f)
-        print('Падажжи я работаю...')
-        summary_report = create_summary_report(reader)
+def choose_action(summary_report: list):
+    """Allows user to select action and runs suitable functions"""
     print('1 - вывести отделы 2 - вывести отчет 3 - выгрузить отчет в csv')
     a_dict = {'1': show_all_departments, '2': print_report, '3': write_report_to_csv}
     option = ''
@@ -92,3 +88,17 @@ if __name__ == '__main__':
         option = input()
     a_dict[option](summary_report)
     print('ALL DONE')
+
+
+def file_processing() -> list:
+    """Runs file processing"""
+    print('Введите имя файла или не вводите, если назвали report.csv')
+    file_name = input("Enter filename : ") or "report.csv"
+    with open(file_name, encoding='UTF-8-sig') as f:
+        reader = csv.reader(f)
+        print('Падажжи я работаю...')
+        return create_summary_report(reader)
+
+
+if __name__ == '__main__':
+    choose_action(file_processing())
